@@ -4,7 +4,7 @@ const Footer = () => {
       <footer className="footer p-10 bg-neutral text-neutral-content">
         <aside>
           <div>
-            <img className="w-16" src="/assets/img/logo.png" alt="" />
+            <img className="w-20" src="/assets/img/logo.png" alt="" />
           </div>
           <p>
             DevHarbor Industries Ltd.
