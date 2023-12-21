@@ -59,7 +59,7 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         <a
-          href=""
+          href="login"
           className="btn bg-purple-500 text-white hover:bg-purple-700 border-0"
         >
           Log In
