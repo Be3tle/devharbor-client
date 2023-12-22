@@ -39,13 +39,9 @@ const Login = () => {
     signIn(email, password)
       .then((result) => {
         const loggedInUser = result.user;
-        console.log(loggedInUser);
-        const user = { email };
+        console
+          .log(loggedInUser)
 
-        axios
-          .post('https://blad-server.vercel.app/jwt', user, {
-            withCredentials: true,
-          })
           .then((res) => {
             console.log(res.data);
             if (res.data.success) {
@@ -84,7 +80,7 @@ const Login = () => {
                   required
                   name="email"
                   placeholder="Email"
-                  className="w-full px-4 py-3 rounded-md border-gray-700 bg-gray-500 text-gray-300 focus:border-gray-400"
+                  className="w-full px-4 py-3 rounded-md border-gray-700 bg-gray-500 text-gray-300"
                 />
               </div>
               <div className="space-y-1 text-sm">
@@ -95,13 +91,13 @@ const Login = () => {
                   type="password"
                   name="password"
                   placeholder="Password"
-                  className="w-full px-4 py-3 rounded-md border-gray-700 bg-gray-500 text-gray-300 focus:border-gray-400"
+                  className="w-full px-4 py-3 rounded-md border-gray-700 bg-gray-500 text-gray-300"
                 />
               </div>
 
               {loginError && <p className="text-red-600 my-5">{loginError}</p>}
 
-              <button className="block w-full p-3 text-center rounded-sm text-gray-50 bg-gray-500">
+              <button className="block w-full p-3 text-center rounded-sm text-gray-50 bg-gray-600">
                 Log in
               </button>
             </form>
