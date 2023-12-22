@@ -12,7 +12,7 @@ const Featured = () => {
         <div className="md:pl-32 pt-5 md:pt-0">
           <p className="text-base uppercase py-3">--- Our Introduction</p>
           <h1 className="text-5xl font-bold uppercase">
-            Welcome to <span className="text-purple-500">devharbor</span>
+            Welcome to <span className="text-gray-500">devharbor</span>
           </h1>
           <p className="py-6 text-justify">
             Your ultimate destination for streamlined development task
@@ -22,15 +22,15 @@ const Featured = () => {
           </p>
 
           <div className="flex p-5 mb-5 bg-base-100 shadow-2xl rounded-l-full">
-            <BiSolidBookAdd className="p-4 rounded-full bg-purple-500 text-6xl text-white" />
+            <BiSolidBookAdd className="p-4 rounded-full bg-gray-500 text-6xl text-white" />
             <p className="text-xl p-3 pl-7 font-medium">Create Tasks</p>
           </div>
           <div className="flex p-5 mb-8 bg-base-100 shadow-2xl rounded-l-full">
-            <FaEdit className="p-4 rounded-full bg-purple-500 text-6xl text-white" />
+            <FaEdit className="p-4 rounded-full bg-gray-500 text-6xl text-white" />
             <p className="text-xl p-3 pl-7 font-medium">Moderate Tasks</p>
           </div>
 
-          <button className="btn bg-purple-500 text-white hover:bg-purple-700 border-0">
+          <button className="btn bg-gray-500 text-white hover:bg-gray-700 border-0">
             Get Started
           </button>
         </div>

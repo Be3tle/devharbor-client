@@ -16,7 +16,7 @@ const Banner = () => {
             Ease Your Developer Life
           </h1>
 
-          <button className="btn bg-purple-500 text-white hover:bg-purple-700 border-0">
+          <button className="btn bg-gray-500 text-white hover:bg-gray-700 border-0">
             Explore Now!
           </button>
         </div>

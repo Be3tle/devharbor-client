@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosPublic = axios.create({
-  baseURL: 'https://blad-server.vercel.app',
+  baseURL: '',
 });
 
 const useAxiosPublic = () => {

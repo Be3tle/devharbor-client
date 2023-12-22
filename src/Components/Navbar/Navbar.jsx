@@ -4,7 +4,7 @@ const Navbar = () => {
   const navItems = (
     <div className="md:flex text-base">
       <li>
-        <a href="">Home</a>
+        <a href="/">Home</a>
       </li>
 
       <li>
@@ -60,7 +60,7 @@ const Navbar = () => {
       <div className="navbar-end">
         <a
           href="login"
-          className="btn bg-purple-500 text-white hover:bg-purple-700 border-0"
+          className="btn bg-gray-500 text-white hover:bg-gray-700 border-0"
         >
           Log In
         </a>

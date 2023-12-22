@@ -8,6 +8,7 @@ import {
   signOut,
   updateProfile,
 } from 'firebase/auth';
+
 import app from '../Firebase/firebase.config';
 import useAxiosPublic from '../Hooks/useAxiosPublic';
 
@@ -35,21 +36,11 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
-  const updateUserProfile = (
-    name,
-    photo,
-    email,
-    bloodGroup,
-    district,
-    upazila
-  ) => {
+  const updateUserProfile = (name, photo, email) => {
     return updateProfile(auth.currentUser, {
       displayName: name,
       photoURL: photo,
       email: email,
-      bloodGroup: bloodGroup,
-      district: district,
-      upazila: upazila,
     });
   };
 
