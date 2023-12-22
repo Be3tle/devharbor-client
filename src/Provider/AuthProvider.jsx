@@ -1,16 +1,13 @@
+/* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from 'react';
-
 import {
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
-  updateProfile,
 } from 'firebase/auth';
-
 import app from '../Firebase/firebase.config';
-import useAxiosPublic from '../Hooks/useAxiosPublic';
 
 export const AuthContext = createContext(null);
 
@@ -19,7 +16,6 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const axiosPublic = useAxiosPublic();
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -36,22 +32,16 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
-  const updateUserProfile = (name, photo, email) => {
-    return updateProfile(auth.currentUser, {
-      displayName: name,
-      photoURL: photo,
-      email: email,
-    });
-  };
-
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log('user in the auth state changed', currentUser);
       setUser(currentUser);
+      setLoading(false);
     });
     return () => {
-      return unsubscribe();
+      unSubscribe();
     };
-  }, [axiosPublic]);
+  }, []);
 
   const authInfo = {
     user,
@@ -59,7 +49,6 @@ const AuthProvider = ({ children }) => {
     createUser,
     signIn,
     logOut,
-    updateUserProfile,
   };
 
   return (
