@@ -2,11 +2,9 @@ import { useForm } from 'react-hook-form';
 import useAuth from '../../Hooks/useAuth';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
-import useAxiosPublic from '../../Hooks/useAxiosPublic';
 
 const AddTask = () => {
   const axiosSecure = useAxiosSecure();
-  const axiosPublic = useAxiosPublic();
 
   const {
     register,
@@ -21,12 +19,13 @@ const AddTask = () => {
     console.log(data);
     if (user && user.email) {
       const taskItem = {
+        email: user.email,
         title: data.title,
         priority: data.priority,
         deadline: data.deadline,
         description: data.description,
       };
-      axiosPublic.post('/tasks', taskItem).then((res) => {
+      axiosSecure.post('/tasks', taskItem).then((res) => {
         console.log(res.data);
         if (res.data.insertedId) {
           Swal.fire({

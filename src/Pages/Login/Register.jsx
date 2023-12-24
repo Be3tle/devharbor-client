@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
-import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import useAxiosPublic from '../../Hooks/useAxiosSecure';
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
