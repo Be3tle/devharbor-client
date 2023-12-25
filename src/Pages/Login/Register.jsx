@@ -19,38 +19,35 @@ const Register = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    createUser(data.email, data.password).then((result) => {
-      const loggedInUser = result.user;
-      console.log(loggedInUser);
-      updateUserProfile(data.name, data.photoURL, data.email)
-        .then(() => {
-          // create user info in the database
-          const userInfo = {
-            name: data.name,
-            email: data.email,
-            photoURL: data.photoURL,
-          };
-          console.log(userInfo);
-          axiosPublic.post('/users', userInfo).then((res) => {
-            if (res.data.insertedId) {
-              console.log('user added to the database');
-              reset();
-              Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'User created successfully',
-                showConfirmButton: false,
-                timer: 2000,
-              });
-              navigate('/');
-            }
-          });
-        })
-        .catch((error) => {
-          console.error(error);
-          setRegError(error.message);
+    // create user info in the database
+    const userInfo = {
+      displayName: data.name,
+      email: data.email,
+      photoURL: data.photoURL,
+      designation: data.designation,
+      password: data.password,
+    };
+    createUser(
+      userInfo.email,
+      userInfo.password,
+      userInfo.designation,
+      userInfo.displayName
+    )
+      .then((result) => {
+        console.log(result.user);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Registration successful',
+          showConfirmButton: false,
+          timer: 2500,
         });
-    });
+        navigate('/');
+      })
+      .catch((error) => {
+        console.error(error);
+        setRegError(error.message);
+      });
   };
 
   return (
@@ -101,6 +98,18 @@ const Register = () => {
                 />
                 {errors.email && (
                   <span className="text-red-500">Email is required</span>
+                )}
+              </div>
+              <div className="space-y-1 text-sm">
+                <label className="block text-gray-500">Designation</label>
+                <input
+                  type="text"
+                  {...register('designation', { required: true })}
+                  placeholder="Designation"
+                  className="w-full px-4 py-3 rounded-md border-gray-700 bg-gray-500 text-gray-3000"
+                />
+                {errors.email && (
+                  <span className="text-red-500">Designation is required</span>
                 )}
               </div>
 

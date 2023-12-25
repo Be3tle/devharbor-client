@@ -9,6 +9,7 @@ const Dashboard = () => {
   const isDashboard = location.pathname === '/dashboard';
 
   const { user, loading } = useContext(AuthContext);
+  console.log(user);
   return (
     <div className="flex">
       {/* sidebar */}
@@ -52,7 +53,7 @@ const Dashboard = () => {
       {/* content */}
       <div className="flex-1">
         {isDashboard && (
-          <div className='flex justify-center items-center flex-col'>
+          <div className="flex justify-center items-center flex-col">
             <h1 className="text-center uppercase py-10 tracking-widest font-bold text-5xl text-black">
               Welcome to dashboard
             </h1>
@@ -68,11 +69,16 @@ const Dashboard = () => {
                   <h2 className="text-xl font-semibold sm:text-2xl">
                     {user.displayName}
                   </h2>
-                  <p className="px-5 text-xs sm:text-base text-gray-400">
-                    Full-stack Developer
-                  </p>
+                  {user.designation ? (
+                    <p className="px-5 text-xs sm:text-base text-gray-400">
+                      {user.designation}
+                    </p>
+                  ) : (
+                    <p className="px-5 text-xs sm:text-base text-gray-400">
+                      Fullstack Developer
+                    </p>
+                  )}
                 </div>
-                
               </div>
             </div>
           </div>
