@@ -3,6 +3,7 @@ import { useDrop } from 'react-dnd';
 import Task from '../../Components/Task/Task';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import useAuth from '../../Hooks/useAuth';
+import Swal from 'sweetalert2';
 
 const MyTasks = () => {
   const axiosSecure = useAxiosSecure();
@@ -13,25 +14,53 @@ const MyTasks = () => {
   const [done, setDone] = useState(null);
 
   const handleDelete = (id) => {
-    // console.log(id)
-    axiosPublic
-      .delete(`/tasks/${id}`)
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.deletedCount > 0) {
-          toast.success('Task Deleted');
+    Swal.fire({
+      title: 'Are you sure?',
+      icon: 'question',
+      confirmButtonText: 'Yes',
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          axiosSecure.delete(`/tasks/${id}`).then((res) => {
+            console.log(res.data);
+          });
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .then((res) => {
+        if (res.data.deleteCount > 0) {
+          Swal.fire({
+            title: 'Deleted successfully!',
+            icon: 'success',
+            confirmButtonText: 'Great!',
+          });
+        }
       });
   };
+
+  // const handleDelete = (id) => {
+  //   axiosPublic
+  //     .delete(`/tasks/${id}`)
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       if (res.data.deletedCount > 0) {
+  //         Swal.fire({
+  //           position: 'top-end',
+  //           icon: 'success',
+  //           title: 'Task deleted',
+  //           showConfirmButton: true,
+  //           timer: 2500,
+  //         });
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   useEffect(() => {
     axiosSecure
       .get(`/tasks/${user?.email}`)
       .then((res) => {
-        // console.log(res.data)
         setTasks(res.data);
       })
       .catch((err) => {
@@ -62,16 +91,12 @@ const MyTasks = () => {
 
   const addItemToSection = (id, status) => {
     console.log('dropped', id, status);
-    // setTasks((prev)=>{
-    //   console.log("prev",prev)
-    //   return prev
-    // })
   };
 
   return (
     <div>
       <h1 className="text-3xl font-bold text-gray-500 text-center pb-3 pt-7">
-          My Tasks
+        My Tasks
       </h1>
       <div
         className="p-5 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3"
