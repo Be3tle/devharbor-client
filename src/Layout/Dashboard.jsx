@@ -1,15 +1,14 @@
-import React, { useContext } from 'react';
 import { FaHome, FaList, FaStore } from 'react-icons/fa';
 import { IoCreate } from 'react-icons/io5';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { AuthContext } from '../Provider/AuthProvider';
+import useAuth from '../Hooks/useAuth';
 
 const Dashboard = () => {
   const location = useLocation();
   const isDashboard = location.pathname === '/dashboard';
 
-  const { user, loading } = useContext(AuthContext);
-  console.log(user);
+  const { user, loading } = useAuth();
+
   return (
     <div className="flex">
       {/* sidebar */}
@@ -38,7 +37,7 @@ const Dashboard = () => {
           <li className="py-1">
             <NavLink to="/dashboard/add-task">
               <IoCreate />
-              Add A Task
+              Add Task
             </NavLink>
           </li>
           <li className="py-1">

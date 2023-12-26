@@ -16,15 +16,19 @@ const AddTask = () => {
   const { user } = useAuth();
 
   const onSubmit = (data) => {
-    console.log(data);
     if (user && user.email) {
       const taskItem = {
         email: user.email,
         title: data.title,
+        status: 'todo',
         priority: data.priority,
         deadline: data.deadline,
         description: data.description,
+        photoURL: user.photoURL,
+        displayName: user.displayName, 
       };
+
+      console.log(taskItem);
       axiosSecure.post('/tasks', taskItem).then((res) => {
         console.log(res.data);
         if (res.data.insertedId) {
@@ -47,7 +51,7 @@ const AddTask = () => {
         <section className="py-6 max-h-full bg-zinc-100">
           <div className="grid max-w-xl grid-cols-1 px-6 mx-auto lg:px-8 md:divide-x py-10=">
             <div className="mb-7 md:py-0 md:px-6 text-center">
-              <h1 className="text-xl font-bold text-gray-500">Create A Task</h1>
+              <h1 className="text-3xl font-bold text-gray-500">Create A Task</h1>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">

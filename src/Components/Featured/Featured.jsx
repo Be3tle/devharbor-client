@@ -1,5 +1,6 @@
 import { BiSolidBookAdd } from 'react-icons/bi';
 import { FaEdit } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Featured = () => {
   return (
@@ -30,9 +31,11 @@ const Featured = () => {
             <p className="text-xl p-3 pl-7 font-medium">Moderate Tasks</p>
           </div>
 
-          <button className="btn bg-gray-500 text-white hover:bg-gray-700 border-0">
-            Get Started
-          </button>
+          <Link to="/dashboard">
+            <button className="btn bg-gray-500 text-white hover:bg-gray-700 border-0">
+              Get Started
+            </button>
+          </Link>
         </div>
       </div>
     </div>
