@@ -1,8 +1,7 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
-import { MdDelete } from 'react-icons/md';
 
-const Task = ({ item, handleDelete }) => {
+const Task = ({ item }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'task',
     item: { id: item._id, status },
@@ -17,7 +16,7 @@ const Task = ({ item, handleDelete }) => {
     <li
       ref={drag}
       className={`bg-white p-2 w-full rounded-md flex items-center gap-2 ${
-        isDragging ? 'opacity-55' : 'opacity-100'
+        isDragging ? 'opacity-60' : 'opacity-100'
       }`}
     >
       <div className="w-full ">

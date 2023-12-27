@@ -3,59 +3,14 @@ import { useDrop } from 'react-dnd';
 import Task from '../../Components/Task/Task';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import useAuth from '../../Hooks/useAuth';
-import Swal from 'sweetalert2';
 
 const MyTasks = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const [tasks, setTasks] = useState(null);
-  const [todo, setTodo] = useState(null);
-  const [doing, setDoing] = useState(null);
-  const [done, setDone] = useState(null);
-
-  const handleDelete = (id) => {
-    Swal.fire({
-      title: 'Are you sure?',
-      icon: 'question',
-      confirmButtonText: 'Yes',
-    })
-      .then((result) => {
-        if (result.isConfirmed) {
-          axiosSecure.delete(`/tasks/${id}`).then((res) => {
-            console.log(res.data);
-          });
-        }
-      })
-      .then((res) => {
-        if (res.data.deleteCount > 0) {
-          Swal.fire({
-            title: 'Deleted successfully!',
-            icon: 'success',
-            confirmButtonText: 'Great!',
-          });
-        }
-      });
-  };
-
-  // const handleDelete = (id) => {
-  //   axiosPublic
-  //     .delete(`/tasks/${id}`)
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       if (res.data.deletedCount > 0) {
-  //         Swal.fire({
-  //           position: 'top-end',
-  //           icon: 'success',
-  //           title: 'Task deleted',
-  //           showConfirmButton: true,
-  //           timer: 2500,
-  //         });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+  const [tasks, setTasks] = useState();
+  const [todoTasks, setTodoTasks] = useState([]);
+  const [doingTasks, setDoingTasks] = useState([]);
+  const [doneTasks, setDoneTasks] = useState([]);
 
   useEffect(() => {
     axiosSecure
@@ -66,31 +21,34 @@ const MyTasks = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [user, handleDelete]);
+  }, [user]);
 
   useEffect(() => {
-    const todo = tasks?.filter((task) => task.status === 'todo');
-    const doing = tasks?.filter((task) => task.status === 'doing');
-    const done = tasks?.filter((task) => task.status === 'done');
+    if (tasks) {
+      const todo = tasks.filter((task) => task.status === 'todo') || [];
+      const doing = tasks.filter((task) => task.status === 'doing') || [];
+      const done = tasks.filter((task) => task.status === 'done') || [];
 
-    setTodo(todo);
-    setDoing(doing);
-    setDone(done);
+      setTodoTasks(todo);
+      setDoingTasks(doing);
+      setDoneTasks(done);
+    }
   }, [tasks]);
 
-  const statuses = ['todo', 'doing', 'done'];
-
-  const [collectedProps, drop] = useDrop(() => ({
+  const [{ isOver }, drop] = useDrop(() => ({
     accept: 'task',
-    drop: (item) => addItemToSection(item.id, item.status),
+    drop: (item) => addItemToSection(item._id),
     collect: (monitor) => ({
-      endDrag: monitor.getDropResult(),
+      isOver: !!monitor.isOver(),
     }),
   }));
-  // console.log(drop)
 
-  const addItemToSection = (id, status) => {
-    console.log('dropped', id, status);
+  const addItemToSection = (id) => {
+    console.log('dropped', id);
+    const onGoing = tasks?.find((task) => id === task._id);
+    if (onGoing) {
+      setDoingTasks((doing) => [...doing, onGoing]);
+    }
   };
 
   return (
@@ -102,30 +60,30 @@ const MyTasks = () => {
         className="p-5 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3"
         ref={drop}
       >
-        {/* to do list */}
+        {/* To-Do list */}
         <div className="rounded-xl p-5 bg-gray-800" ref={drop}>
           <h2 className="text-2xl font-bold text-white text-center">To-Do</h2>
           <ul className="py-4 flex flex-col gap-2">
-            {todo?.map((item, index) => (
-              <Task handleDelete={handleDelete} key={index} item={item} />
+            {todoTasks.map((item, index) => (
+              <Task key={index} item={item} />
             ))}
           </ul>
         </div>
-        {/* on going list */}
+        {/* Doing list */}
         <div className="rounded-xl p-5 bg-gray-800" ref={drop}>
           <h2 className="text-2xl font-bold text-white text-center">Doing</h2>
           <ul className="py-4 flex flex-col gap-2">
-            {doing?.map((item, index) => (
-              <Task handleDelete={handleDelete} key={index} to={item} />
+            {doingTasks.map((item, index) => (
+              <Task key={index} item={item} />
             ))}
           </ul>
         </div>
-        {/* complete list */}
+        {/* Done list */}
         <div className="rounded-xl p-5 bg-gray-800" ref={drop}>
           <h2 className="text-2xl font-bold text-white text-center">Done</h2>
           <ul className="py-4 flex flex-col gap-2">
-            {done?.map((item, index) => (
-              <Task handleDelete={handleDelete} key={index} item={item} />
+            {doneTasks.map((item, index) => (
+              <Task key={index} item={item} />
             ))}
           </ul>
         </div>
