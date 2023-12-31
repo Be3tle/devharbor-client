@@ -25,6 +25,7 @@ Visit the live site: [Dev Harbor](https://dev-harbor.web.app/)
 - **React Router DOM**: Implemented for navigation within the app.
 - **Tailwind CSS**: Employed for efficient and responsive styling.
 - **Axios**: Used for making HTTP requests from the frontend to the backend, facilitating seamless communication between the client and server.
+- **React DnD (Drag and Drop)**: Implemented for creating a smooth and interactive drag and drop experience.
 
 ### Backend:
 
